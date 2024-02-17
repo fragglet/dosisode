@@ -1,0 +1,8 @@
+posy.o
+pepy_misc.o
+yacc.o
+pepyvrsn.o
+-lpsap
+-lcompat
+-lunix
+-lm

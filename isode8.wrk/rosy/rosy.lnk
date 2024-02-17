@@ -1,0 +1,8 @@
+rosy.o
+yacc.o
+rosyvrsn.o
+../pepy/pepy_misc.o
+-lpsap
+-lcompat
+-lunix
+-lm

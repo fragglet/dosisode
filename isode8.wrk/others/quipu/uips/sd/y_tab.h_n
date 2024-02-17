@@ -1,0 +1,20 @@
+
+typedef union  {
+  filt_struct *filt;
+  char strval[255];
+  int symbol;
+} YYSTYPE;
+extern YYSTYPE yylval;
+# define NUMBER 257
+# define NAME 258
+# define DEFAULT 259
+# define ITEM 260
+# define NOT 261
+# define AND 262
+# define OR 263
+# define APPROX 264
+# define EQUAL 265
+# define SUBSTRING 266
+# define STRING 267
+# define OID 268
+

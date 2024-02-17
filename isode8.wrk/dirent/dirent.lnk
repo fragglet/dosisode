@@ -1,0 +1,10 @@
+getdents.o
+closedir.o
+opendir.o
+readdir.o
+rewinddir.o
+scandir.o
+seekdir.o
+telldir.o
+getcwd.o
+direntvrsn.o

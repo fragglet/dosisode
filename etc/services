@@ -1,0 +1,20 @@
+#
+# Network services, Internet style
+#
+echo		7/tcp
+netstat		15/tcp
+ftp		21/tcp
+telnet		23/tcp
+smtp		25/tcp		mail
+time		37/tcp
+nicname		101/tcp		hostname	# usually from sri-nic
+pegvdisk	666/tcp
+#
+# Host specific functions
+#
+tftp		69/udp
+finger		79/tcp
+tsap            102/tcp
+who		513/udp		whod
+printer		515/tcp		spooler
+talk		517/udp

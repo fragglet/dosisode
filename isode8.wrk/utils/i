@@ -1,0 +1,7 @@
+-DBINPATH=\"/bin/\"
+-DLOGPATH=\"/tmp/\"
+-DETCPATH=\"/etc/\"
+-DSBINPATH=\"/etc/\"
+-Ic:/pkay/isode8.wrk/h
+-Ic:/pkay/isode8.wrk/unix/h
+-Ic:/pkay/isode8.wrk/unix/h/sys

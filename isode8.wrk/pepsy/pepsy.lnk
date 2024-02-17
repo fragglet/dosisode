@@ -1,0 +1,14 @@
+pepsy.o
+pepsy-yacc.o
+pepsy_misc.o
+pass2.o
+etabs.o
+dtabs.o
+ptabs.o
+dfns.o
+mod.o
+pepsyvrsn.o
+-lpsap
+-lcompat
+-lunix
+-lm

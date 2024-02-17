@@ -1,0 +1,295 @@
+CURSES(3)		MS-DOS Programmer's Manual		  CURSES(3)
+
+NAME
+   curses - screen/window management library
+
+DESCRIPTION
+   Curses is a library of screen and window management routines. It is modeled
+   after the UNIX curses and ncurses libraries. Normally, programs written for
+   PCcurses should be easily ported to UNIX, and vice versa.
+
+   To use the routines, the function initscr() must first be called. This cre-
+   ates two 'windows' for the user: stdscr and curscr. Stdscr is the default
+   window for the user to make changes on, and curscr reflects the current
+   contents of the physical display screen. The user writes or edits the std-
+   scr window to his liking, then calls the refresh() function to make curscr
+   and the physical screen look like stdscr. When the user program terminates,
+   it should call the endwin() function to restore things to normal.
+
+   There are all sorts of window manipulation routines available to the pro-
+   grammer: auxiliary windows may be created, edited, moved and deleted. The
+   terminal may be set in many different modes, output text may be attributed
+   with blink, blank, bold and reverse attributes. There are window-specific
+   printf- and scanf-like routines, routines for scrolling, box-drawing, win-
+   dow overlaying, clearing routines etc. Curses also handles terminal func-
+   tion keys, which is enables by calling the keypad() function.
+
+   The handling of character attributes is different on MGA, CGA and Hercules
+   adapters. The package has been tested with them all. EGA has not been tes-
+   ted, but should also work except for special screen modes.
+
+   For more and detailed information, see the library source codes. All curses
+   functions are preceded by a brief but complete description.
+
+COMPILING
+   All programs that use curses facilities should include the file <curses.h>,
+   and during linking, the library ?curses.lib should be specified to the lin-
+   ker ('?' is 's', 'c' 'm' or 'l' for small, compact, medium or large memory
+   model respectively).
+
+FUNCTIONS
+   Below is a list over the available functions, together with a brief de-
+   scription of what they do. In general, functions whose names start with
+   'w' differ from the one without 'w' (like wmove vs. move) signify that
+   a specific window is used. Without a 'w', stdscr is implied. The functions
+   that start with 'mv' before the 'generic' function name signify that a
+   cursor motion should be made before the actual work. 'mv' and 'w' combine
+   as expected.
+
+   Most routines that return an int will return the manifest constant ERR if
+   there is a failure during execution. Routines that return a char actually
+   return an int, so that ERR does not conflict with the character code 0xff.
+   All IBM PC characters from 0 to 0xff are allowed for usage with curses.
+   There are (non-portable) character output routines to write the special
+   IBM fonts for characters with ASCII code less than 0x20 (control charac-
+   ters).
+
+   Some routines, like {mv}{w} printw() and {mv}{w}scanw() return a meaningful
+   positive value if the operation is successful.
+
+   The curses package uses some predefined types, variables and manifest con-
+   stants that are also available to the programmer. There are also a few
+   globally accessible variables that should not be touched by the applica-
+   tion program. Those untouchable variables have names starting with an
+   underscore (_) to avoid conflicts. The user-accessible types, variables
+   and constants are (there are a number of other constants defining charac-
+   ter attribute names and function key names - consult <curses.h> for de-
+   tails):
+
+   (manifest constants)
+
+   	TRUE				boolean true
+	FALSE				boolean false
+	ERR				unsuccessful operation
+	OK				successful operation
+
+   (types)
+
+   	WINDOW				a window structure type
+	bool				boolean flag type
+
+   (variables)
+
+   	WINDOW curscr			physical display image
+	WINDOW stdscr			default user drawing board
+   	int    LINES			terminal height
+	int    COLS			terminal width
+
+   The following is an alphabetical list of the curses functions, together
+   with their types, parameters and a short comment for each. Win is a win-
+   dow; ch, l, r, t, b, tl, tr, bl and br are characters; buf is a character
+   buffer; attrs is an attribute bit map; bf is a boolean flag. Note that
+   `character' return values in this context usually can have 16 bits. Gua-
+   ranteed portable functions (existing in Berkeley UNIX curses) are marked
+   with an asterisk (*):
+
+
+*  int   addch(ch)			put char in stdscr
+   int	 addrawch(ch)			put raw char in stdscr
+*  int	 addstr(str)			put string in stdscr
+   void	 attroff(attrs)			clear attribute(s) in stdscr
+   void	 attron(attrs)			add attribute(s) in stdscr
+   void	 attrset(attrs)			set stdscr char attributes
+   int	 baudrate()			dummy for compatibility
+   void	 beep()				ring the bell
+   void	 border(l,r,t,b,tl,tr,bl,br)	Set non-std box characters
+*  void	 box(win,l,t)			box in a window, with given characters
+*  void	 cbreak()			set terminal cbreak mode
+*  void	 clear()			clear stdscr
+*  void	 clearok(win,bf)		marks window for screen clear
+*  int	 clrtobot()			clear end of stdscr
+*  int	 clrtoeol()			clear end of line in stdscr
+*  void	 crmode()			set terminal cbreak mode
+   void	 cursoff()			turns off hardware cursor
+   void	 curson()			turns on hardware cursor
+   void	 def_prog_mode()		save TTY modes
+   void	 def_shell_mode()		compatibility dummy
+*  int	 delch()			delete a char in stdscr
+*  int	 deleteln()			delete a line in stdscr
+*  void	 delwin(win)			delete a window or a subwindow
+   void	 doupdate()			update physical screen
+*  void	 echo()				set terminal echo mode
+*  int	 endwin()			cleanup and curses finitialization
+*  void	 erase()			erase stdscr
+   int	 erasechar()			return char delete character
+   int	 fixterm()			dummy for compatibility
+   void	 flash()			flash terminal screen
+   void  flushinp()			kill pending keyboard input
+*  int	 getch()	(#def macro)	get character via stdscr
+*  int	 getstr(buf)			get string via stdscr to a buffer
+*  void	 getyx(win,y,x)			get a window's cursor position
+*  int	 gettmode()			dummy for compatibility
+   void	 idlok(win,bf)			dummy for compatibility
+*  int	 initscr()			curses initialization (ret 1 if OK)
+*  int	 inch()				get char at stdscr cursor
+*  int	 insch(ch)			insert character in stdscr
+   int	 insrawch(ch)			insert raw character in stdscr
+*  int	 insertln()			insert an empty line in stdscr
+   void	 keypad(win,bf)			marks a window for keypad usage
+   int   killchar()			return line delete character
+*  void	 leaveok(win,bf)		marks window for cursor 'update leave'
+*  char *longname()			returns terminal description string
+   void  meta(win,bf)			marks window for meta (dummy function)
+*  int	 move(y,x)			move cursor in stdscr
+*  int	 mvaddch(y,x,ch)		move & put char in stdscr
+   int	 mvaddrawch(y,x,ch)		move & put raw char in stdscr
+*  int	 mvaddstr(y,x,str)		move & put string in stdscr
+*  int	 mvclrtobot(y,x)		move & clear end of stdscr
+*  int	 mvclrtoeol(y,x)		move & clear lineend in stdscr
+*  int	 mvcur(oldy,oldx,y,x)		move terminal cursor to <y,x>
+*  int	 mvdelch(y,x)			move & delete a char in stdscr
+*  int	 mvdeleteln(y,x)		move & delete a line in stdscr
+*  int	 mvgetch(y,x)			move & get char to stdscr
+*  int	 mvgetstr(y,x,buf)		move & get string via stdscr to buffer
+*  int	 mvinch(y,x,)			move & get char at stdscr cursor
+*  int	 mvinsch(y,x,ch)		move & insert char in stdscr
+   int	 mvinsrawch(y,x,ch)		move & insert raw char in stdscr
+*  int	 mvinsertln(y,x)		move & insert new line in stdscr
+*  int	 mvprintw(y,x,fmt,args)		move & print string in stdscr
+*  int	 mvscanw(y,x,fmt,args)		move & get values via stdscr
+*  int	 mvwaddch(win,y,x,ch)		move & put char in a window
+   int	 mvwaddrawch(win,y,x,ch)	move & put raw char in a window
+*  int	 mvwaddstr(win,y,x,str)		move & put string in a window
+*  int	 mvwclrtobot(win,y,x)		move & clear end of a window
+*  int	 mvwclrtoeol(win,y,x)		move & clear lineend in a window
+*  int	 mvwdelch(win,y,x)		move & delete a char in a window
+*  int	 mvwdeleteln(win,y,x)		move & delete a line in a window
+*  int	 mvwgetch(win,y,x)		move & get char to a window
+*  int	 mvwgetstr(win,y,x,str)		move & get string to a window
+*  int	 mvwinch(win,y,x)		move & get char at window cursor
+*  int	 mvwinsch(win,y,x,ch)		move & insert char in a window
+   int	 mvwinsrawch(win,y,x,ch)	move & insert raw char in a window
+*  int	 mvwinsertln(win,y,x)		move & insert new line in window
+   int	 mvwin(win,y,x)			move window on physical screen
+*  int	 mvwprintw(win,x,y,fmt,args)	move & print string in a window
+*  int	 mvwscanw(win,y,x,fmt,args)	move & get values via a window
+*  WINDOW *newwin(lines,cols,begy,begx)	create a new window
+*  void	 nl()				set terminal cr-crlf mapping mode
+*  void	 nocbreak()			unset terminal cbreak mod
+*  void	 nocrmode()			unset terminal cbreak mode
+   void	 nodelay(win,bf)		marks window for no input wait
+*  void	 noecho()			unset terminal echo mode
+*  void	 nonl()				unset terminal cr-crlf mapping mode
+*  void	 noraw()			unset raw terminal mode
+*  void	 overlay(win1,win2)		overlay one window on another
+*  void	 overwrite(win1,win2)		overwrite one window on another
+*  int	 printw(fmt,args)		print string in stdscr
+*  void	 raw()				set raw terminal mode
+   void	 refrbrk(bf)			set screen update break mode
+*  void	 refresh()			refresh stdscr
+   int	 resetterm()			dummy for compatibility
+*  int	 resetty()			restore terminal I/O modes
+   void	 reset_prog_mode()		restore terminal I/O modes
+   void	 reset_shell_mode()		set terminal to default modes
+   int	 saveoldterm()			dummy for compatibility
+   int	 saveterm()			dummy for compatibility
+*  int	 savetty()			save terminal I/O modes
+*  int	 scanw(fmt,args)		get values via stdscr
+*  void	 scroll(win)			scroll scrolling region of a window
+*  void	 scrollok(win,bf)		marks a window to allow scroll
+   int	 setsrcreg(miny,maxy)		define stdscr's scroll region
+*  int	 setterm()			dummy for compatibility
+   int	 setupterm(term,fd,errret)	set up terminal (no-op on PC)
+*  void	 standend()			start normal chars in stdscr
+*  void	 standout()			start standout chars in stdscr
+*  WINDOW *subwin(win,lines,cols,begy,begx) create a sub-window in window win
+   int	 tabsize(ts)			set/get tabsize of stdscr
+*  void	 touchwin(win)			mark a window as totally modified
+*  char	*unctrl(ch)			char-to-string converter
+   int	 ungetch(ch)	(#def macro)	push back a character to input */
+*  int	 waddch(win,ch)			put char in a window
+   int	 waddrawch(win,ch)		put raw char in a window
+*  int	 waddstr(win,str)		put string in a window
+   void	 wattroff(win,attrs)		clear attribute(s) in window
+   void	 wattron(win,attrs)		add attribute(s) in window
+   void	 wattrset(win,attrs)		set window char attributes
+   void	 wborder(win,l,r,t,b,tl,tr,bl,br) Set non-std box characters
+*  int	 wbox(win,miny,minx,maxy,maxx,l,r) draw a box inside a window
+*  void	 wclear(win)			clear a window
+*  int	 wclrtobot(win)			clear end of a window
+*  int	 wclrtoeol(win)			clear end of line in a window
+*  int	 wdelch(win)			delete a char in a window
+*  int	 wdeleteln(win)			delete a line in a window
+*  void	 werase(win)			erase a window
+*  int	 wgetch(win)			get char via a window
+*  int	 wgetstr(win,buf)		get string via window to a buffer
+*  int	 winch(win)			get char at window cursor
+*  int	 winsch(win,ch)			insert character in a window
+   int	 winsrawch(win,ch)		insert raw character in a window
+*  int	 winsertln(win)			insert new line in a window
+*  int	 wmove(win,y,x)			move cursor in a window
+   void	 wnoutrefresh(win)		create internal screen image
+*  int	 wprintw(win,fmt,args)		print string in a window
+*  void	 wrefresh(win)			refresh window
+*  int	 wscanw(win,fmt,args)		get values via a window
+   int	 wsetsrcreg(win,miny,maxy)	define a window's scrolling region
+*  void	 wstandend(win)			start normal chars in window
+*  void	 wstandout(win)			start standout chars in window
+   int	 wtabsize(win,ts)		set/get tabsize of a window
+   int	 wungetch(ch)			push back a character to input */
+
+MISSING FUNCTIONS
+
+   The following functions existing in UNIX curses are missing in PCcurses:
+
+   getcap(nam)				get terminal capability 'name'
+
+FUNCTIONS UNIQUE TO PCcurses
+
+   The following functions are (to the author's knowledge) unique to PCcurses:
+
+   int	 addrawch(ch)			put raw char in stdscr
+   int	 waddrawch(win,ch)		put raw char in a window
+   int	 mvaddrawch(y,x,ch)		move & put raw char in stdscr
+   int	 mvwaddrawch(win,y,x,ch)	move & put raw char in a window
+   int   insrawch(ch)			insert raw character in stdscr
+   int   winsrawch(win,ch)		insert raw character in a window
+   int	 mvinsrawch(y,x,ch)		move & insert raw char in stdscr
+   int	 mvwinsrawch(win,y,x,ch)	move & insert raw char in a window
+   int   tabsize(ts)			set/get tabsize of stdscr
+   int	 wtabsize(win,ts)		set/get tabsize of a window
+
+SEE ALSO
+   "Screen Updating And Cursor Movement Optimization: A Library Package" -
+   Kenneth C.R.C. Arnold
+   "The Ncurses Reference Manual" - Pavel Curtis, Cornell University
+
+BUGS
+   The terminal raw I/O mode is implemented by reading characters directly
+   from the BIOS. This means that the programmer must not use the normal
+   I/O routines to the screen or from the keyboard, since they will trap the
+   MS-DOS ^C, ^S, ^Q and ^P characters and thus nullify the raw input.
+
+   Also, if the terminal is in normal or cbreak mode and the programmer has
+   trapped CTRL-BREAK by using signal(SIGINT,ownhandler), MS-DOS will still
+   echo the characters '^C' on the screen when the character is intercepted.
+   There seems to be no way to avoid this under MS-DOS (use raw mode in-
+   stead, or redraw the whole screen).
+
+   The function key support is hardware dependent. There is a table in char-
+   get.c that maps keyboard scan codes from the keyboard to function key
+   names. The one supplied works for IBM PC/XT/AT, and for most clones.
+
+REVISION
+   The current revision is v.1.3 (881005). If you find or correct bugs, or if
+   you think up or implement enhancements, please contact the author. That way
+   he can maintain an 'official' version of PCcurses, without too many local
+   versions floating around.
+
+AUTHOR
+   Home:	   Bjorn Larsson		Work:	INFOVOX AB
+		   Ynglingagatan 5,IV			Box 2503
+		   S-113 47 Stockholm			S-171 02 Solna
+		   SWEDEN				SWEDEN
+
+		   UseNet: ...!seismo!mcvax!enea!infovax!bl

@@ -1,0 +1,10 @@
+pepy.o
+pepy_do.o
+pepy_undo.o
+yacc.o
+pepy_misc.o
+pepyvrsn.o
+-lpsap
+-lcompat
+-lunix
+-lm

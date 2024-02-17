@@ -1,0 +1,100 @@
+#
+# Modified from the  University of Melbourne Network Host Database
+#
+#	NB: For sendmail to recognise a host as existing on the
+#	    ether for the purposes of sending mail via SMTP, the
+#	    short form (no dots) name must be the second name given,
+#	    (eg: no SMTP to mundara).
+#
+# Standard loopback address
+#
+#127.1		localhost
+127.0.0.1	localhost
+130.123.3.10	cs-server.massey.ac.nz cs-server
+130.123.1.4	cc-vms1.massey.ac.nz cc-vms1
+#
+# CSIRO Division of Information Technology hosts
+#
+128.250.1.81	ditmela.oz		ditmela mailhost x400-gate loghost
+128.250.1.82	ditmelb.oz.au		ditmelb
+128.250.1.83	perch	ditmelc.oz		ditmelc
+128.250.1.84	trout	ditmeld.oz		ditmeld
+128.250.1.85	ditmelg.oz		ditmelg
+128.250.1.86	flounder
+128.250.1.87	ditme ditme.cng.dit.csiro.au
+128.250.1.88	ditmh ditmh.cng.dit.csiro.au
+128.250.1.89    guppy
+130.102.128.3	goanna.oz.au
+#
+# University Computing Services
+#
+# UCS Kinetics Fast-Path mac gateways
+#
+128.250.1.2	ucsatgw1
+128.250.1.3	ucsatgw2
+#
+# UCS regular hosts
+#
+128.250.1.4	murdu.mu.oz		murdu			uvax
+128.250.1.5	muwaya.dn.mu.oz		muwaya
+128.250.1.6	ucsibmpc
+
+#
+# Computer Science and Mathematics Departments
+#
+# TSA SUN sub-net
+#
+#128.250.1.21	munnari.oz		munnari
+#128.250.21.1	tsa-munnari
+#128.250.21.2	tsa-gateway
+128.250.21.10	muri.cs.mu.oz		muri
+128.250.21.11	mundamutti.cs.mu.oz	mundamutti
+128.250.21.12	murrumbong.cs.mu.oz	murrumbong
+#
+# MIP SUN sub-net
+#
+128.250.1.22	munginya.cs.mu.oz	munginya
+128.250.22.1	mip-munginya
+#128.250.22.2	mip-gateway
+128.250.22.10	mura.cs.mu.oz		mura
+128.250.22.11	mungiebundie.cs.mu.oz	mungiebundie
+128.250.22.12	mungina.cs.mu.oz	mungina
+128.250.22.13	murranana.cs.mu.oz	murranana
+#
+# CS Dept SUN sub-net (currently part of MIP sub-net)
+#
+128.250.22.40	mullo.cs.mu.oz		mullo
+128.250.22.41	mudla.cs.mu.oz		mudla
+128.250.22.42	muldi.cs.mu.oz		muldi
+128.250.22.43	mulya.cs.mu.oz		mulya
+#
+# CS Dept mac gateways
+#
+128.250.1.23	murramai.cs.mu.oz	murramai
+128.250.1.24	murrawai.cs.mu.oz	murrawai
+128.250.1.25	murrowong.cs.mu.oz	murrowong
+#
+# CS Dept regular hosts
+#
+128.250.1.26	munnari.oz		munnari
+128.250.1.27	mulga.oz		mulga
+128.250.1.28	murina.mu.oz		murina		 	embos
+128.250.1.29	mudlo.mu.oz		mudlo
+128.250.1.30	munmurra.mu.oz		munmurra.cs.mu.oz	munmurra
+128.250.1.31	mundara.mu.oz		mundara.cs.mu.oz	mundara
+128.250.1.33	murri.cs.mu.oz		murri
+128.250.1.34	murrinya.cs.mu.oz	murrinya
+128.250.1.35	mullauna.mu.oz		mullauna.cs.mu.oz.au	mullauna
+128.250.1.36	mubboon.mu.oz		mubboon.cs.mu.oz.au	mubboon
+#
+# Maths Dept Microvax
+#
+128.250.1.32	mundoe.mu.oz		mundoe			mundoe.cs.mu.oz
+128.250.1.37	murgon
+128.250.1.39	maths
+
+#
+# Physics Department hosts
+#
+128.250.1.41	munda.mu.oz		munda
+128.250.1.42	mukana.ph.mu.oz		mukana

@@ -1,0 +1,2 @@
+char *ftamversion = "ftam 8.0 #7 (massey) of Sun Jun 28 12:06:04 EST 1992";
+char *isodeversion = "isode 8.0 #109 (massey) of Sun Jun 28 13:09:30 EST 1992";

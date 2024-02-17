@@ -1,0 +1,141 @@
+I would much prefer you to ftp the source file patches and rebuild the
+whole system on your own machine. But as a LAST resort I have included
+a file that just contains executables and support directories for all
+of the applications. We pay for traffic from our site - and as you can see
+this file is considerably bigger than just the source patches. Details of
+how to install this are at the end of this file.
+
+To rebuild the whole system you will need to FTP the file dosisode80.zip
+in binary mode from this site. As well as this file you will also need to
+FTP the real isode 8.0 distribution, and the latest DJ GNU C port (I got this
+from barnacle.erc.clarkson.edu in /pub/msdos/djgpp).
+You don't need the Waterloo package, but might like to have a look at it -
+its available from sunee.uwaterloo.ca
+
+Getting the GNU c compiler installed is a fair sized task in its own right!
+I suggest you do this first.
+
+You will need at least a 386sx machine and lots of disk space! (80Mb min)
+
+pkunzip my file with the -d option and have a look at what's there.
+
+My own directory structure looks a bit like this...
+
+c:\pkay\isode8\...
+       \isode8.wrk\...
+       \pkdos\...
+       \sockets\...
+       \gcc201\...
+  \etc\...
+  \tmp\...
+  \bin\...
+
+Because I share the machine with other people I hide everything in the pkay
+directory. However I put the etc directory at the top level, just in case
+someone only wants the executables. (The executables have the path of the
+etc directory hard-coded into them)
+
+It is advisable NOT to hide the directories down one level. Things will
+not work if you hide them more than one level down! (The tar program I supply
+to untar the isode distribution gets confused if you get too many layers
+down, and the 'others' directory is very deep!)
+
+Have a look at the config.sys file and autoexec.bat file. You will need to
+edit these files to reflect where you put your directories. (Inside the
+\pkay\pkdos\.. directory there is a PD mv command that allows you to swap whole
+trees around).
+
+There are too many ways that the config.sys and autoexec.bat file can be
+screwed up, so I will assume that you are sufficiently experienced with DOS
+to handle any problems yourself. NB GCC does restrict you A LOT. If all else
+fails just run with my files directly!
+
+Make sure your PATH variable now has the compiler and my \pkay\pkdos directory
+included.
+
+You need to arrange a packet driver. GCC plays around with some of the
+interrupt numbers available for the packet driver! I strongly advise you to use
+int 0x60. - certainly nothing above 0x70 will work.
+
+Getting the real isode dist loaded.... In the \pkay\pkdos directory there is
+an uncompress utility, so after you have ftp'd it from your local isode archive
+comp430d -d isode-8.z (or whatever name you called it) will decompress it.
+
+Un-tarring the resultant file is a little tricky. DOS restricts us to 8+3
+filenames. If we supply it with more it happily truncates. There are a few
+files in ISODE that are not unique to 8 characters. DJTARXX in the \pkay\pkdos
+directory will untar the standard isode distribution and will convert
+any non-unique filenames. You must use this program to get the isode
+distribution installed as the converted filenames are known to the rest of
+the build files. DJTARXX expects that you have set all the environmental
+variables in the autoexec.bat file! It uses one of the 'isode' ones
+to point it to the file utils\convert.lst that holds the conversions.
+
+This untarring results in a top level directory of ISODE-8.0, I didn't care
+for this particularly, so renamed it (using mv) to be ISODE8. Which explains
+my tree structure. You might also like to do this.
+
+From now one you should realise that all the work goes on in the ISODE8.WRK
+directory ISODE8 never really gets altered (not quite true) ISODE8.WRK
+mirrors all the directories of the real distribution. Any files that I change
+I put in there. The make procedure just picks a file from there if it exists
+or from the ISODE8 tree if it hasn't altered. That way I can keep my changes
+separate from the real files.
+
+There is ONE file that you need to edit before you can make the system.
+ISODE8.WRK\utils\i contains some linker directives that couldn't be handled
+using environmental variables. You should edit this file to reflect your own
+placement of directories. It also has to know about where your etc tmp and
+bin directories are.
+
+Thats all there is to it! now just type MAKE in the ISODE8.WRK directory and
+wait around for a few hours! The make files are all just standard DOS batch
+files. It may be that I use batch facilities only available at DOS version
+X or greater. I don't know. I'm running DOS version 5.0
+
+To configure the system...
+
+First of all you have to do all the normal configuration associated with
+isode. The files in /etc are my configuration.
+Secondly there are some IP type files in /etc that need to be altered.
+resolv.conf contains the name of your nameserver. The hosts file is used
+as a fallback.
+
+Well thats about all, apart from the important piece of glue that I wrote.
+In the \sockets\.. directory you will find a tsr called sockets. This program
+should be loaded once when you switch the machine on. It links between the
+protected address space of the 386 programs and the real mode tcp/ip package.
+You shouldn't be able to load it more than once. If you don't load it the
+applications will tell you that you haven't. At present there is no in built
+method for removing the tsr. Beware! the TSR uses some un-used(?) sub-functions
+of the DOS Printer interrupt int 17h (ah>2). It was one way I could easily
+bridge the gap between the two worlds. If you run any other programs that
+hack like I do, you will get into trouble.
+In the \pkay\sockets directory you will also find a configuration file
+for the Waterloo TCP/IP package - you should alter this file to
+reflect your own network numbers.
+
+The last time I did this with VMS I found several problems with the
+distribution (that I quickly fixed). If you do have problems please let me know
+- it may also pay you to keep looking at the size/datestamp of the
+distribution file at 130.123.1.4 to see if any other changes have been made!
+
+
+Peter Kay (PKay@massey.ac.nz)
+
+
+------------------------------------------------
+binary installation.
+
+pkunzip the file with the -d option.
+Look at my autoexec.bat and config.sys files. Encorporate them into your
+system. Pay particular attention to to the GO32 variable. You'll find
+a copy of the support files in the /pkdos/ directory. The variables associated
+with compiling/linking are not needed.
+Make sure that the directory pointed to by GO32TMP exists.
+Get a packet driver loaded - preferably at 0x60 certainly NOT above 0x6f
+Configure the standard isode /etc files as for standard isode.
+Change the resolv.conf file to point to your nameserver.
+Alter the wattcp.cfg file in /sockets to reflect your network numbers
+start the SOCKETS TSR going in the /sockets directory
+execute an application

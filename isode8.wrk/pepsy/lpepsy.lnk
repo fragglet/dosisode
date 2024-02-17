@@ -1,0 +1,10 @@
+univ_tables.o
+enc.o
+dec.o
+fre.o
+pepsy_str.o
+prnt.o
+util.o
+vprint.o
+py_advise.o
+pepsyvrsn.o

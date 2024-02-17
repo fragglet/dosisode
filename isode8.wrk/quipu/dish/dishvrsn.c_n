@@ -1,0 +1,2 @@
+char *isodeversion = "isode 8.0 #109 (massey) of Sun Jun 28 13:09:30 EST 1992";
+char *dishversion = "dish 7.0 #2 (sis-server) of Sun Jun 28 11:03:22 NZST 1992";
